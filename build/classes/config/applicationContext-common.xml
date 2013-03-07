@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:p="http://www.springframework.org/schema/p"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- spring使用注解 -->
+	<context:component-scan base-package="com.miao"/>
+	<!-- Controller 配置 -->
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />   
+	<!-- 使用注解映射 -->
+	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	
+	<!-- 数据源配置 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="packagesToScan" value="com.miao.model"></property>
+		<property name="hibernateProperties">
+			<value>
+			hibernate.connection.autocomit=true
+			hibernate.hbm2ddl.auto=create
+			hibernate.dialect=org.hibernate.dialect.MySQLDialect
+			hibernate.connection.provider_class=org.hibernate.connection.ProxoolConnectionProvider
+			hibernate.proxool.pool_alias=platform
+			hibernate.proxool.properties=config/proxool.properties
+			hibernate.show_sql=true
+			</value>
+		</property>
+	</bean>
+</beans>
